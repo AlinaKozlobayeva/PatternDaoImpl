@@ -1,2 +1,0 @@
-# connection url
-connection.url = jdbc:mysql://localhost/userdb?user=root&password=root
