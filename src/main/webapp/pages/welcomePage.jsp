@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Welcome Page</title>
+  <script></script>
 </head>
 <body>
 <h1>Hello to our page!</h1>
@@ -18,7 +19,7 @@
   Password:<br> <input type="password" name="password" required>
   <br>
   <input type="submit" value="Log In">
-  <input type="button" value="Sign Up" onclick="location.href='newUser.jsp'"/>
+  <input type="button" value="Sign Up" onclick="location.href='../pages/newUser.jsp'"/>
 
 </form>
 </body>

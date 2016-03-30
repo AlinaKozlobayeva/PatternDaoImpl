@@ -35,6 +35,11 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("../pages/welcomePage.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter(PARAM_LOGIN);
         String password = req.getParameter(PARAM_PASSWORD);
         log("Login=" + login + ":: password=" + password);
@@ -47,10 +52,5 @@ public class LoginServlet extends HttpServlet {
             rd.include(req, resp);
 
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("../pages/welcomePage.jsp").forward(req, resp);
     }
 }

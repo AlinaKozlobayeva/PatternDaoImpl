@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>sign up page</title>
-    <script type="text/javascript" src="/js/newUser.js"></script>
+    <script type="text/javascript" src="../js/newUser.js"></script>
 </head>
 <body>
 <form name="newUser" action="signUp" method="post" onsubmit="return validName()">
