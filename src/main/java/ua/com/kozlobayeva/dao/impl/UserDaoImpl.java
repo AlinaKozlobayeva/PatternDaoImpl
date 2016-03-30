@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import com.mysql.jdbc.Driver;
+import ua.com.kozlobayeva.dao.UserDao;
+import ua.com.kozlobayeva.entity.User;
+import ua.com.kozlobayeva.entity.UserFields;
 
 
 /**
