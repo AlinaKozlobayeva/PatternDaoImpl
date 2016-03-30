@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Alina
+  User: ASUS1
   Date: 29.03.2016
   Time: 12:20
   To change this template use File | Settings | File Templates.
@@ -15,10 +15,9 @@
 <form action="login" method="post">
   Login:<br> <input type="text" name="login" required>
   <br>
-  Password:<br> <input type="password" name="password" required>
+  Password:<br> <input type="text" name="password" required>
   <br>
   <input type="submit" value="Log In">
-  <input type="button" value="Sign Up" onclick="location.href='newUser.jsp'"/>
 
 </form>
 </body>

@@ -5,7 +5,7 @@
          version="3.1">
 
     <welcome-file-list>
-        <welcome-file>/pages/welcomePage.jsp</welcome-file>
+        <welcome-page>../pages/welcomePage.jsp</welcome-page>
     </welcome-file-list>
 
 
