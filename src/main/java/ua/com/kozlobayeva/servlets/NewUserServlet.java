@@ -2,7 +2,6 @@ package ua.com.kozlobayeva.servlets;
 
 import ua.com.kozlobayeva.dao.impl.UserDaoImpl;
 import ua.com.kozlobayeva.entity.User;
-import ua.com.kozlobayeva.entity.UserFields;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,12 +32,12 @@ public class NewUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String name = req.getParameter(UserFields.NAME);
-        String login = req.getParameter(UserFields.LOGIN);
-        String password = req.getParameter(UserFields.PASSWORD);
+        String name = req.getParameter("name");
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
 
         UserDaoImpl userDao = new UserDaoImpl();
-        userDao.create(new User(name, login, password));
+        userDao.create(new User(login, password, name));
         req.getRequestDispatcher("../pages/welcomePage.jsp").forward(req, resp);
     }
 }

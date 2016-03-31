@@ -17,7 +17,7 @@ public class User {
      * @param password user password in system
      */
 
-    public User(String name, String login, String password) {
+    public User(String login, String password, String name) {
         this.name = name;
         this.login = login;
         this.password = password;

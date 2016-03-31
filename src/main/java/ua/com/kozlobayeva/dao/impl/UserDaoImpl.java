@@ -1,16 +1,16 @@
 
 package ua.com.kozlobayeva.dao.impl;
 
+import com.mysql.jdbc.Driver;
+import ua.com.kozlobayeva.dao.UserDao;
+import ua.com.kozlobayeva.entity.User;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import com.mysql.jdbc.Driver;
-import ua.com.kozlobayeva.dao.UserDao;
-import ua.com.kozlobayeva.entity.User;
-import ua.com.kozlobayeva.entity.UserFields;
 
 
 /**
@@ -22,16 +22,20 @@ public class UserDaoImpl implements UserDao {
 
     private final String url;
     private static final String DB_PROPERTIES = "db_prop.txt";
+    private static final String NAME = "username";
+    private static final String LOGIN = "login";
+    private static final String PASSWORD = "password";
 
-    private static final String SQL_SELECT_USER_BY_LOGIN = "SELECT * FROM users WHERE " + UserFields.LOGIN + "=?";
-    private static final String SQL_CREATE_USER = "INSERT INTO users VALUES (DEFAULT, ?,?,?)";
-    private static final String SQL_UPDATE_USER = "UPDATE users SET " + UserFields.NAME + "=?," + UserFields.LOGIN
-            + "=?," + UserFields.PASSWORD + "=?,";
+    private static final String SQL_SELECT_USER_BY_LOGIN = "SELECT * FROM users WHERE " + LOGIN + "=?";
+    private static final String SQL_CREATE_USER = "INSERT INTO users VALUES (?,?,?)";
+    private static final String SQL_UPDATE_USER = "UPDATE users SET " + NAME + "=?," + PASSWORD + "=? WHERE " + LOGIN  + "=?";
     private static final String SQL_SELECT_ALL_USERS = "SELECT * FROM users";
-    private static final String SQL_DELETE_USER = "DELETE FROM users WHERE " + UserFields.LOGIN + "=?";
+    private static final String SQL_DELETE_USER = "DELETE FROM users WHERE " + LOGIN + "=?";
+
+
 
     /**
-     * Class Constructor.
+     * Class Constructor. Getting connection url from property.
      */
     public UserDaoImpl() {
         try {
@@ -56,12 +60,15 @@ public class UserDaoImpl implements UserDao {
         }
 
         url = props.getProperty("connection.url");
-        if (url == null) {
-            throw new IllegalStateException(
-                    "You have to define connection.url property in " + DB_PROPERTIES);
-        }
     }
 
+    /**
+     * Create DAO with specified connection url.
+     * @param url database connection url.
+     */
+    public UserDaoImpl(String url) {
+        this.url = url;
+    }
 
     @Override
     public User findUserByLogin(String login) {
@@ -78,9 +85,7 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (con != null) {
-                close(con);
-            }
+            close(con);
         }
         return res;
 
@@ -110,15 +115,17 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean create(User user) {
         Connection con = null;
-        int k = 0;
+        int k = 1;
         try {
             con = getConnection();
             PreparedStatement pstmt = con.prepareStatement(SQL_CREATE_USER, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(k++, user.getLogin());
-            pstmt.setString(k++, user.getName());
             pstmt.setString(k++, user.getPassword());
+            pstmt.setString(k++, user.getName());
             int count = pstmt.executeUpdate();
             if (count > 0) {
+                ResultSet rs = pstmt.getGeneratedKeys();
+
                 return true;
             }
         } catch (SQLException e) {
@@ -132,15 +139,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean update(User user) {
+    public boolean update(String login, String changedPassword, String changedUsername) {
         Connection con = null;
-        int k = 0;
+        int k = 1;
         try {
             con = getConnection();
             PreparedStatement pstmt = con.prepareStatement(SQL_UPDATE_USER);
-            pstmt.setString(k++, user.getLogin());
-            pstmt.setString(k++, user.getName());
-            pstmt.setString(k++, user.getPassword());
+            pstmt.setString(k++, login);
+            pstmt.setString(k++, changedPassword);
+            pstmt.setString(k++, changedUsername);
             int count = pstmt.executeUpdate();
             if (count > 0) {
                 return true;
@@ -158,7 +165,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean delete(String login) {
         Connection con = null;
-        int k = 0;
+        int k = 1;
         try {
             con = getConnection();
             PreparedStatement pstmt = con.prepareStatement(SQL_DELETE_USER);
@@ -179,13 +186,11 @@ public class UserDaoImpl implements UserDao {
 
     private Connection getConnection() throws SQLException {
         DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-        Connection con = DriverManager.getConnection(url);
-        return con;
+        return DriverManager.getConnection(url);
     }
 
     private User extractUser(ResultSet rs) throws SQLException {
-        User user = new User(rs.getString(UserFields.NAME), rs.getString(UserFields.LOGIN), rs.getString(UserFields.PASSWORD));
-        return user;
+     return new User(rs.getString(LOGIN), rs.getString(PASSWORD), rs.getString(NAME));
     }
 
     private void close(Connection con) {
@@ -199,6 +204,4 @@ public class UserDaoImpl implements UserDao {
         }
 
     }
-
-
 }

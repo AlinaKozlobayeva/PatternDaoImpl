@@ -25,10 +25,12 @@ public interface GenericDao<K extends Serializable, T> {
 
     /**
      * Method for updating user.
-     * @param value key
+     * @param value1 key for detecting object
+     * @param value2 value that may be changed
+     * @param value3 value that may be changed
      * @return true if update successful and false otherwise
      */
-    boolean update(T value);
+    boolean update(K value1, K value2, K value3);
 
     /**
      * Method for deleting user with K key.

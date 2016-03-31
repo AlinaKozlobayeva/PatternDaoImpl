@@ -19,7 +19,7 @@
   Password:<br> <input type="password" name="password" required>
   <br>
   <input type="submit" value="Log In">
-  <input type="button" value="Sign Up" onclick="location.href='../pages/newUser.jsp'"/>
+  <input type="button" value="Sign Up" onclick="location.href='/pages/newUser.jsp';"/>
 
 </form>
 </body>

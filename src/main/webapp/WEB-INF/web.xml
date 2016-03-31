@@ -5,7 +5,7 @@
          version="3.1">
 
     <welcome-file-list>
-        <welcome-file>/pages/welcomePage.jsp</welcome-file>
+        <welcome-file>pages/welcomePage.jsp</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -20,14 +20,13 @@
 
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
-        <url-pattern>pages/login</url-pattern>
+        <url-pattern>/pages/login</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>newUserServlet</servlet-name>
-        <url-pattern>pages/signUp</url-pattern>
+        <url-pattern>/pages/signUp</url-pattern>
     </servlet-mapping>
-
 
 </web-app>
 
