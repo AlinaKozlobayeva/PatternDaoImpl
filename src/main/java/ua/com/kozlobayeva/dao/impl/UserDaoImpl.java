@@ -21,14 +21,15 @@ public class UserDaoImpl implements UserDao {
 
 
     private final String url;
-    private static final String DB_PROPERTIES = "db_prop.txt";
+    private static final String DB_PROPERTIES = "dbConfig.properties";
     private static final String NAME = "username";
     private static final String LOGIN = "login";
     private static final String PASSWORD = "password";
 
     private static final String SQL_SELECT_USER_BY_LOGIN = "SELECT * FROM users WHERE " + LOGIN + "=?";
     private static final String SQL_CREATE_USER = "INSERT INTO users VALUES (?,?,?)";
-    private static final String SQL_UPDATE_USER = "UPDATE users SET " + NAME + "=?," + PASSWORD + "=? WHERE " + LOGIN  + "=?";
+    private static final String SQL_UPDATE_USER = "UPDATE users SET " + NAME + "=?," + PASSWORD + "=? WHERE " + LOGIN
+            + "=?";
     private static final String SQL_SELECT_ALL_USERS = "SELECT * FROM users";
     private static final String SQL_DELETE_USER = "DELETE FROM users WHERE " + LOGIN + "=?";
 
@@ -44,7 +45,6 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
         }
         Properties props = new Properties();
-
         // this way we obtain db.properties file from the CLASSPATH
         InputStream in;
         try {
